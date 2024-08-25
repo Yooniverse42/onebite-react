@@ -1,0 +1,9 @@
+.section__controller {
+  border-radius: 10px;
+  background-color: #f6f6f6;
+  padding: 10px 20px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  margin-top: 10px;
+}

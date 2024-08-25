@@ -1,0 +1,14 @@
+.section__counter {
+  background-color: #f6f6f6;
+  padding: 10px 20px;
+  border-radius: 10px;
+
+  p {
+    font-size: 1rem;
+  }
+
+  .count {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+}

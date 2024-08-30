@@ -3,7 +3,7 @@
   flex-flow: row nowrap;
   align-items: center;
   gap: 20px;
-  padding-bottom: 20px;
+  padding: 20px 0;
   border-bottom: 1px solid rgb(240, 240, 240);
 
   input {
@@ -12,5 +12,16 @@
 
   .content {
     flex: 1;
+  }
+
+  .date {
+    color: gray;
+  }
+
+  button {
+    border: none;
+    color: gray;
+    padding: 5px;
+    border-radius: 5px;
   }
 }

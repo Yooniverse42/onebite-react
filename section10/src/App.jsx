@@ -3,6 +3,7 @@ import "./App.css";
 import Header from "./components/Header";
 import Editor from "./components/Editor";
 import List from "./components/List";
+import Exam from "./components/Exam";
 
 function App() {
   const mockData = [
@@ -53,9 +54,10 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
+      <Exam />
+      {/* <Header />
       <Editor onCreate={onCreate} />
-      <List todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
+      <List todos={todos} onUpdate={onUpdate} onDelete={onDelete} /> */}
     </div>
   );
 }

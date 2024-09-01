@@ -1,9 +1,11 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import "./Editor.css";
+import { TodoDispatchContext } from "../App";
 
-const Editor = ({ onCreate }) => {
+const Editor = () => {
+  const { onCreate } = useContext(TodoDispatchContext);
   const [content, setContent] = useState("");
-  const contentRef = useRef();
+  const inputRef = useRef();
 
   const onChangeContent = (e) => {
     setContent(e.target.value);
@@ -17,7 +19,7 @@ const Editor = ({ onCreate }) => {
 
   const onSubmit = () => {
     if (content === "") {
-      contentRef.current.focus();
+      inputRef.current.focus();
       return;
     }
     onCreate(content);
@@ -27,7 +29,7 @@ const Editor = ({ onCreate }) => {
   return (
     <div className="Editor">
       <input
-        ref={contentRef}
+        ref={inputRef}
         onKeyDown={onKeydown}
         type="text"
         placeholder="새로운 Todo..."

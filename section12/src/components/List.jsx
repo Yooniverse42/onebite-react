@@ -1,8 +1,11 @@
-import { useMemo, useState } from "react";
 import "./List.css";
 import TodoItem from "./TodoItem";
+import { useState, useMemo, useContext } from "react";
+import { TodoStateContext } from "../App";
 
-const List = ({ todos, onUpdate, onDelete }) => {
+const List = () => {
+  const todos = useContext(TodoStateContext);
+
   const [search, setSearch] = useState("");
 
   const onChangeSearch = (e) => {
@@ -18,23 +21,10 @@ const List = ({ todos, onUpdate, onDelete }) => {
     );
   };
 
-  const fileredTodos = getFilteredData();
-
-  // const getAnalyzedData = () => {
-  //   const totalCount = todos.length;
-  //   const doneCount = todos.filter((todo) => todo.isDone).length;
-  //   const notDoneCount = totalCount - doneCount;
-
-  //   return {
-  //     totalCount,
-  //     doneCount,
-  //     notDoneCount,
-  //   };
-  // };
+  const filteredTodos = getFilteredData();
 
   const { totalCount, doneCount, notDoneCount } = useMemo(() => {
-    console.log("호출되부렸습니다");
-
+    console.log("getAnalyzedData 호출!");
     const totalCount = todos.length;
     const doneCount = todos.filter((todo) => todo.isDone).length;
     const notDoneCount = totalCount - doneCount;
@@ -45,33 +35,26 @@ const List = ({ todos, onUpdate, onDelete }) => {
       notDoneCount,
     };
   }, [todos]);
-
-  // const { totalCount, doneCount, notDoneCount } = getAnalyzedData();
+  // 의존성배열 : deps
 
   return (
     <div className="List">
       <h4>Todo List 🌱</h4>
       <div>
-        <div>toatl: {totalCount}</div>
+        <div>total: {totalCount}</div>
         <div>done: {doneCount}</div>
         <div>notDone: {notDoneCount}</div>
       </div>
       <input
         value={search}
         onChange={onChangeSearch}
-        type="text"
-        placeholder="검색어를 입력하세요."
+        placeholder="검색어를 입력하세요"
       />
-      {fileredTodos.map((todo) => {
-        return (
-          <TodoItem
-            key={todo.id}
-            {...todo}
-            onUpdate={onUpdate}
-            onDelete={onDelete}
-          />
-        );
-      })}
+      <div className="todos_wrapper">
+        {filteredTodos.map((todo) => {
+          return <TodoItem key={todo.id} {...todo} />;
+        })}
+      </div>
     </div>
   );
 };

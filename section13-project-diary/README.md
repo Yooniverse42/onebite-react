@@ -1,8 +1,13 @@
-# React + Vite
+# Project03 - Emotional Diary
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 라우팅이란?
 
-Currently, two official plugins are available:
+## 이미지를 `public`이 아닌 `assets`에 넣은 이유
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+`public`폴더에 이미지 파일을 넣게 되면, 비트가 자동으로 제공하는 이미지 최적화가 동작하지 않게 된다.
+
+- `assets`폴더 안 이미지는 암호문 같은 포맷으로 되어 있음. 이를 Data URI라고 부르며, 이미지와 같은 외부 데이터들을 문자열 형태로 브라우저의 메모리에 캐싱하기 위해 사용되는 포맷임.  
+  그럼 이미지들은 자동으로 브라우저의 메모리에 캐싱, 즉 저장되어서 새로고침 하더라도 다시는 불러오지 않도록 최적화가 됨.
+- `public`폴더 안 이미지는 새로고침할 때마다 새로 불러옴.
+
+=> 상황마다 다름. 지금보다 많은 다수의 이미지가 필요할 경우엔 퍼블릭폴더에 넣는게 나을 수도 있음. 왜냐하면 메모리에다가 캐싱해 두면 용량 과부화가 올 수 있으니까! 그래서 양이 적을 땐 에셋폴더에서 이미지 최적화를 시키자!

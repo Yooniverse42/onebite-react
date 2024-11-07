@@ -1,35 +1,134 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route } from "react-router-dom";
+import "./App.css";
+import Home from "./pages/Home";
+import New from "./pages/New";
+import Diary from "./pages/Diary";
+import Edit from "./pages/Edit";
+import Notfound from "./pages/Notfound";
+import { createContext, useEffect, useReducer, useRef, useState } from "react";
+
+function reducer(state, action) {
+  let nextState;
+  switch (action.type) {
+    case "INIT":
+      return action.data;
+    case "CREATE": {
+      nextState = [action.data, ...state];
+      break;
+    }
+    case "UPDATE": {
+      nextState = state.map((item) =>
+        String(item.id) === String(action.data.id) ? action.data : item
+      );
+      break;
+    }
+    case "Delete": {
+      nextState = state.filter((item) => String(item.id) !== String(action.id));
+      break;
+    }
+    default:
+      nextState = state;
+  }
+
+  localStorage.setItem("diary", JSON.stringify(nextState));
+  return nextState;
+}
+
+export const DiaryStateContext = createContext();
+export const DiaryDispatchContext = createContext();
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, dispatch] = useReducer(reducer, []);
+  const idRef = useRef(0);
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("diary");
+    if (!storedData) {
+      setIsLoading(false);
+      return;
+    }
+
+    const persedData = JSON.parse(storedData);
+    if (!Array.isArray(persedData)) {
+      setIsLoading(false);
+      return;
+    }
+
+    let maxId = 0;
+    persedData.forEach((item) => {
+      if (Number(item.id) > maxId) {
+        maxId = Number(item.id);
+      }
+    });
+
+    idRef.current = maxId + 1;
+
+    dispatch({
+      type: "INIT",
+      data: persedData,
+    });
+
+    setIsLoading(false);
+  }, []);
+
+  // localStorage.setItem("person", JSON.stringify({ name: "유니" }));
+  // console.log(JSON.parse(localStorage.getItem("person")));
+  // localStorage.removeItem("person");
+
+  // 새로운 일기 추가
+  const onCreate = (createdDate, emotionId, content) => {
+    dispatch({
+      type: "CREATE",
+      data: {
+        id: idRef.current++,
+        createdDate,
+        emotionId,
+        content,
+      },
+    });
+  };
+
+  // 새로운 일기 수정
+  const onUpdate = (id, createdDate, emotionId, content) => {
+    dispatch({
+      type: "UPDATE",
+      data: {
+        id,
+        createdDate,
+        emotionId,
+        content,
+      },
+    });
+  };
+
+  // 새로운 일기 삭제
+  const onDelete = (id) => {
+    dispatch({
+      type: "Delete",
+      id,
+    });
+  };
+
+  if (isLoading) {
+    return <div>데이터 로딩 중..</div>;
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <DiaryStateContext.Provider value={data}>
+        <DiaryDispatchContext.Provider value={{ onCreate, onUpdate, onDelete }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/new" element={<New />} />
+            <Route path="/diary/:id" element={<Diary />} />
+            <Route path="/edit/:id" element={<Edit />} />
+            <Route path="*" element={<Notfound />} />
+          </Routes>
+        </DiaryDispatchContext.Provider>
+      </DiaryStateContext.Provider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

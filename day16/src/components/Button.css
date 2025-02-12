@@ -1,0 +1,21 @@
+button {
+  font-weight: bold;
+  border: 1px solid rgb(133, 133, 133);
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: rgb(52, 52, 52);
+
+  &:focus,
+  &:hover {
+    background-color: #3b3b3b;
+  }
+}
+
+.AddButton {
+  width: 100%;
+  padding: 10px;
+}
+
+.RemoveButton {
+  padding: 10px 20px;
+}

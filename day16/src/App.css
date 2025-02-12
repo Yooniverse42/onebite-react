@@ -1,0 +1,14 @@
+#root {
+  min-width: 400px;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  display: flex;
+  flex-flow: column;
+  gap: 30px;
+
+  h1 {
+    margin: 0;
+  }
+}

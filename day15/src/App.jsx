@@ -1,7 +1,7 @@
 import { useReducer } from "react";
 import "./App.css";
-import Add from "./layouts/Add";
-import List from "./layouts/List";
+import ContactEditor from "./layouts/ContactEditor";
+import ContactList from "./layouts/ContactList";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -38,8 +38,8 @@ function App() {
   return (
     <>
       <h1>Contact List ☎️</h1>
-      <Add onCreate={onCreate} />
-      <List list={list} onDelete={onDelete} />
+      <ContactEditor onCreate={onCreate} />
+      <ContactList list={list} onDelete={onDelete} />
     </>
   );
 }

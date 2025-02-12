@@ -1,5 +1,5 @@
 import ListItem from "../components/ListItem";
-import "./List.css";
+import "./ContactList.css";
 
 const List = ({ list, onDelete }) => {
   return (

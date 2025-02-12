@@ -1,0 +1,13 @@
+.ListItem {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.name {
+  width: 90px;
+}
+
+.email {
+  min-width: 200px;
+}

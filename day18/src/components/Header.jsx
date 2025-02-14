@@ -1,4 +1,3 @@
-import { string, object } from "prop-types";
 import "./Header.css";
 
 function Header({ leftChild, title, rightChild }) {
@@ -10,11 +9,5 @@ function Header({ leftChild, title, rightChild }) {
     </header>
   );
 }
-
-Header.propTypes = {
-  leftChild: object,
-  title: string,
-  rightChild: object,
-};
 
 export default Header;

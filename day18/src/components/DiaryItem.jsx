@@ -10,7 +10,9 @@ function DiaryItem({ id, emotionId, createdDate, content }) {
   const { onDelete } = useContext(DiaryDispatchContext);
 
   const onClickDelete = () => {
-    onDelete(id);
+    if (confirm("정말 삭제하시겠습니까?")) {
+      onDelete(id);
+    } else return;
   };
 
   return (
